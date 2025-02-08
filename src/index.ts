@@ -5,6 +5,7 @@ const {serverConfig,logger} = config
 const { PORT } = serverConfig;
 const app = express();
 
+app.use(express.json());
 app.use("/api", apiRoutes)
 
 app.listen(PORT, () => {

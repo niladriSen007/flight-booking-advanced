@@ -1,10 +1,9 @@
 import express from "express";
-import { controllers } from "../../controllers";
 
+import AirplaneRoutes from "./airplane-routes";
 const router = express.Router();
-const { v1 } = controllers
-const { info } = v1
 
-router.get("/info", info)
+
+router.use("/airplane", AirplaneRoutes)
 
 export default router

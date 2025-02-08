@@ -1,5 +1,7 @@
+import { AirplaneController } from './airplane-controller';
 import { info } from './info-controller';
 
-export const v1 = {
-    info
+export {
+    info,
+    AirplaneController
 };
