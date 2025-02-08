@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+import {serverConfig} from './server-config';
+import {logger} from './logger-config';
 
 export const config = {
-  PORT: process.env.PORT,
-}
+  serverConfig,
+  logger
+};
