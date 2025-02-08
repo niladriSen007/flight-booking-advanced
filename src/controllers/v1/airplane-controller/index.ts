@@ -9,7 +9,11 @@ export class AirplaneController {
 
   async createAirplane(req: Request<{}, {}, Airplane>, res: Response, next: NextFunction) {
     try {
-      const airplane = await this.airplaneService.createAirplane(req?.body);
+      const { modelNumber, capacity } = req?.body;
+      const airplane = await this.airplaneService.createAirplane({
+        modelNumber,
+        capacity
+      });
       return res.status(StatusCodes.CREATED).json({
         success: true,
         data: airplane,

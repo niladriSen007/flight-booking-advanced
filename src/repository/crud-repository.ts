@@ -16,7 +16,7 @@ export class CrudRepository {
       return await this.model.create(data);
     } catch (error) {
       config.logger.error(error.message);
-      throw new Error(error.message);
+      throw new Error(error);
     }
   }
 
