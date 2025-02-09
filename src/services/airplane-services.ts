@@ -1,6 +1,7 @@
-
+import { StatusCodes } from "http-status-codes";
 import { config } from "../config";
 import { AirplaneRepository } from "../repository/airplane-repository";
+import { GlobalErrorResponse } from "../utils/errors/global-api-error-response";
 
 export class AirplaneService {
   constructor(private readonly airplaneRepository: AirplaneRepository) {
@@ -12,9 +13,14 @@ export class AirplaneService {
     try {
       return await this.airplaneRepository.create(data);
     } catch (error) {
+      if (error.message.includes("SequelizeValidationError")) {
+        const explanations = [error?.message]
+        config.logger.error(explanations.join(', '));
+        throw new GlobalErrorResponse(explanations.join(', '), StatusCodes.BAD_REQUEST);
+      }
+
       config.logger.error(error.message);
       throw new Error(error.message);
     }
-
   }
 }

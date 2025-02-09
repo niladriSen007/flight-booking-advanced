@@ -16,12 +16,21 @@ export default (sequelize, DataTypes) => {
   Airplane.init({
     modelNumber: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate:{
+        notEmpty: true,
+        isAlphanumeric: true
+      }
     },
     capacity: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 20
+      defaultValue: 20,
+      validate:{
+        notEmpty: true,
+        isNumeric: true,
+        max: 200
+      }
     }
   }, {
     sequelize,

@@ -18,9 +18,8 @@ const airplaneService = new AirplaneService(airplaneRepository)
 const airplaneController = new AirplaneController(airplaneService)
 
 router.post("/",
-  validateCreateAirplaneRequestValidation as RequestHandler,
-  async (req: Request<{}, {}, Airplane>, res: Response, next: NextFunction) => {
-    await airplaneController.createAirplane(req, res, next);
+  validateCreateAirplaneRequestValidation as RequestHandler,  async (req: Request<{}, {}, Airplane>, res: Response) => {
+    await airplaneController.createAirplane(req, res);
   });
 
 
