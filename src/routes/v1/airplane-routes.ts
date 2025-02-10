@@ -30,5 +30,9 @@ router.get("/:id", async (req: Request, res: Response) => {
   await airplaneController.getAirplaneById(req, res);
 });
 
+router.delete("/:id", async (req: Request, res: Response) => {
+  await airplaneController.deleteAirplane(req, res);
+});
+
 
 export default router

@@ -45,4 +45,16 @@ export class AirplaneService {
       throw new GlobalErrorResponse(error.message, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async deleteAirplane(id: number) {
+    try {
+      return await this.airplaneRepository.destroy({ id });
+    } catch (error) {
+      if (error?.statusCode === StatusCodes.NOT_FOUND) {
+        throw new GlobalErrorResponse("Airplane not found", StatusCodes.NOT_FOUND);
+      }
+      config.logger.error(error.message);
+      throw new GlobalErrorResponse(error.message, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

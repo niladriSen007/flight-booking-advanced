@@ -17,6 +17,12 @@ export class CrudRepository {
   async destroy(data: {
     id: number;
   }) {
+
+    const airplane = await this.model.findByPk(data.id);
+    if (!airplane) {
+      throw new GlobalErrorResponse("Airplane not found",StatusCodes.NOT_FOUND
+      );
+    }
     return await this.model.destroy({
       where: {
         id: data.id

@@ -53,4 +53,18 @@ export class AirplaneController {
       return res.status(error?.statusCode).json(errorFormat);
       }
     }
+
+
+  async deleteAirplane(req: Request, res: Response) {
+    try {
+      const airplaneId = Number(req.params.id);
+      await this.airplaneService.deleteAirplane(airplaneId);
+      successResponseFormat.message = "Airplane deleted successfully";
+      return res.status(StatusCodes.OK).json(successResponseFormat);
+    } catch (error) {
+      errorFormat.message = "Internal server error";
+      errorFormat.error.explanation = error.message;
+      return res.status(error?.statusCode).json(errorFormat);
+    }
+  }
 }
