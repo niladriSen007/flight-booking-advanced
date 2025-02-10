@@ -22,5 +22,9 @@ router.post("/",
     await airplaneController.createAirplane(req, res);
   });
 
+router.get("/", async (req: Request, res: Response) => {
+  await airplaneController.getAllAirplanes(req, res);
+});
+
 
 export default router

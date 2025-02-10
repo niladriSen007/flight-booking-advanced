@@ -23,4 +23,13 @@ export class AirplaneService {
       throw new Error(error.message);
     }
   }
+
+  async getAllAirplanes() {
+    try {
+      return await this.airplaneRepository.getAll();
+    } catch (error) {
+      config.logger.error(error.message);
+      throw new GlobalErrorResponse(error.message, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

@@ -11,7 +11,7 @@ export class AirplaneController {
 
   async createAirplane(req: Request<{}, {}, Airplane>, res: Response) {
     try {
-      const { modelNumber, capacity } = req?.body;
+      const { modelNumber, capacity } = req.body;
       const airplane = await this.airplaneService.createAirplane({
         modelNumber,
         capacity
@@ -19,6 +19,20 @@ export class AirplaneController {
       successResponseFormat.data = airplane;
       successResponseFormat.message = "Airplane created successfully";
       return res.status(StatusCodes.CREATED).json(successResponseFormat);
+    } catch (error) {
+      errorFormat.message = "Internal server error";
+      errorFormat.error.explanation = error.message;
+      return res.status(error?.statusCode).json(errorFormat);
+    }
+  }
+
+
+  async getAllAirplanes(req: Request, res: Response) {
+    try {
+      const airplanes = await this.airplaneService.getAllAirplanes();
+      successResponseFormat.data = airplanes;
+      successResponseFormat.message = "Airplanes fetched successfully";
+      return res.status(StatusCodes.OK).json(successResponseFormat);
     } catch (error) {
       errorFormat.message = "Internal server error";
       errorFormat.error.explanation = error.message;
