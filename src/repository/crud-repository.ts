@@ -1,71 +1,40 @@
 import { Model, ModelStatic } from 'sequelize';
-import { config } from '../config';
+import { CreateAirplaneRequest } from '../types';
 
 export class CrudRepository {
-  protected model: ModelStatic<Model>;
 
-  constructor(model: ModelStatic<Model>) {
-    this.model = model;
+  constructor(private readonly model: ModelStatic<Model>) { }
+
+  async create(data: CreateAirplaneRequest): Promise<Model> {
+    return await this.model.create({
+      modelNumber: data.modelNumber,
+      capacity: data.capacity
+    });
   }
 
-  async create(data: {
-    modelNumber: string;
-    capacity: number;
-  }): Promise<Model> {
-    try {
-      return await this.model.create(data);
-    } catch (error) {
-      config.logger.error(error.message,"zxxzx");
-      throw new Error(error);
-    }
+  async destroy(data: {
+    id: number;
+  }) {
+    return await this.model.destroy({
+      where: {
+        id: data.id
+      }
+    });
   }
 
-  async destroy(){
-    try {
-      // Implementation
-      return await this.model.destroy({
-        where:{
-          // conditions
-        }
-      });
-    } catch (error) {
-      config.logger.error(error.message);
-      throw new Error(error.message);
-      
-    }
+  async getAll() {
+    return await this.model.findAll();
   }
 
-  async getAll(){
-    try {
-      // Implementation
-      return await this.model.findAll();
-    } catch (error) {
-      config.logger.error(error.message);
-      throw new Error(error.message);
-    }
+  async getById(id: number) {
+    return await this.model.findByPk(id);
   }
 
-  async getById(id: number){
-    try {
-      // Implementation
-      return await this.model.findByPk(id);
-    } catch (error) {
-      config.logger.error(error.message);
-      throw new Error(error.message);
-    }
-  }
-
-  async update(id:number,data: { [key: string]: any }){
-    try {
-      // Implementation
-      return await this.model.update(data,{
-        where:{
-          id: id
-        }
-      });
-    } catch (error) {
-      config.logger.error(error.message);
-      throw new Error(error.message);
-    }
+  async update(id: number, data: CreateAirplaneRequest) {
+    return await this.model.update(data, {
+      where: {
+        id: id
+      }
+    });
   }
 }
