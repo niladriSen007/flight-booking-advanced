@@ -26,5 +26,9 @@ router.get("/", async (req: Request, res: Response) => {
   await airplaneController.getAllAirplanes(req, res);
 });
 
+router.get("/:id", async (req: Request, res: Response) => {
+  await airplaneController.getAirplaneById(req, res);
+});
+
 
 export default router

@@ -1,5 +1,7 @@
 import { Model, ModelStatic } from 'sequelize';
 import { CreateAirplaneRequest } from '../types';
+import { GlobalErrorResponse } from '../utils/errors/global-api-error-response';
+import { StatusCodes } from 'http-status-codes';
 
 export class CrudRepository {
 
@@ -27,6 +29,10 @@ export class CrudRepository {
   }
 
   async getById(id: number) {
+    const airplane = await this.model.findByPk(id);
+    if (!airplane) {
+      throw new GlobalErrorResponse("Airplane not found",StatusCodes.NOT_FOUND);
+    }
     return await this.model.findByPk(id);
   }
 

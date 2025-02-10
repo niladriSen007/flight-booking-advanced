@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { AirplaneService } from "../../../services/airplane-services";
 import { Airplane } from "../../../types";
 
-import { errorFormat,successResponseFormat } from "../../../utils/common";
+import { errorFormat, successResponseFormat } from "../../../utils/common";
 export class AirplaneController {
 
   constructor(private readonly airplaneService: AirplaneService) {
@@ -39,4 +39,18 @@ export class AirplaneController {
       return res.status(error?.statusCode).json(errorFormat);
     }
   }
+
+  async getAirplaneById(req: Request, res: Response) {
+    try {
+      const airplaneId = Number(req.params.id);
+      const airplane = await this.airplaneService.getAirplaneById(airplaneId);
+      successResponseFormat.data = airplane! ;
+      successResponseFormat.message = "Airplane fetched successfully";
+      return res.status(StatusCodes.OK).json(successResponseFormat);
+      } catch (error) {
+      errorFormat.message = "Internal server error";
+      errorFormat.error.explanation = error.message;
+      return res.status(error?.statusCode).json(errorFormat);
+      }
+    }
 }
